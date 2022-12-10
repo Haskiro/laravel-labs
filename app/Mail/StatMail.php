@@ -6,10 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Article;
-use App\Models\Comment;
 
-class TestMail extends Mailable
+class StatMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,13 +16,13 @@ class TestMail extends Mailable
      *
      * @return void
      */
-    protected $article;
-    protected $comment;
+    protected $articleCount;
+    protected $commentCount;
 
-    public function __construct(Article $article, Comment $comment)
+    public function __construct($articleCount, $commentCount)
     {
-        $this->article = $article;
-        $this->comment = $comment;
+        $this->articleCount = $articleCount;
+        $this->commentCount = $commentCount;
     }
 
     /**
@@ -35,8 +33,8 @@ class TestMail extends Mailable
     public function build()
     {
         return $this->from('test@gmail.com')
-                    ->to('kondratev.pacha@mail.ru')
-                    ->with(['article' => $this->article, 'comment' => $this->comment])
-                    ->view('mail.send');
+                    ->to('moosbeere.549@gmail.com')
+                    ->with(['articleCount' => $this->articleCount, 'commentCount' => $this->commentCount])
+                    ->view('mail.stat');
     }
 }
